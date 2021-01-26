@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ActivityDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityID" />
+    </Key>
+    <Property Name="ActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Student_N_Number" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Term" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Hours" Type="Decimal" Precision="2" Scale="2" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="250" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="AuthorizedBy" Type="String" MaxLength="9" FixedLength="true" Unicode="true" />
+    <Property Name="EnteredBy" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Timestamp" Type="Binary" MaxLength="8" FixedLength="true" annotation:StoreGeneratedPattern="Computed" />
+    <NavigationProperty Name="Faculty" Relationship="Self.FK_Activity_Faculty" FromRole="Activity" ToRole="Faculty" />
+    <NavigationProperty Name="Semester" Relationship="Self.FK_Activity_Semester" FromRole="Activity" ToRole="Semester" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_Activity_Student" FromRole="Activity" ToRole="Student" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Activity_User" FromRole="Activity" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Faculty">
+    <Key>
+      <PropertyRef Name="N_Number" />
+    </Key>
+    <Property Name="N_Number" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MiddleInitial" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Activities" Relationship="Self.FK_Activity_Faculty" FromRole="Faculty" ToRole="Activity" />
+  </EntityType>
+  <EntityType Name="Semester">
+    <Key>
+      <PropertyRef Name="Term" />
+    </Key>
+    <Property Name="Term" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="From" Type="DateTime" Precision="0" />
+    <Property Name="To" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Activities" Relationship="Self.FK_Activity_Semester" FromRole="Semester" ToRole="Activity" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="N_Number" />
+    </Key>
+    <Property Name="N_Number" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MiddleInitail" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Major" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Activities" Relationship="Self.FK_Activity_Student" FromRole="Student" ToRole="Activity" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="N_Number" />
+    </Key>
+    <Property Name="N_Number" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MiddleInitial" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Department" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EMail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Activities" Relationship="Self.FK_Activity_User" FromRole="User" ToRole="Activity" />
+  </EntityType>
+  <Association Name="FK_Activity_Faculty">
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="N_Number" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="AuthorizedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Activity_Semester">
+    <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Semester">
+        <PropertyRef Name="Term" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="Term" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Activity_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="N_Number" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="Student_N_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Activity_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="N_Number" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="EnteredBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ActivityDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Activities" EntityType="Self.Activity" />
+    <EntitySet Name="Faculties" EntityType="Self.Faculty" />
+    <EntitySet Name="Semesters" EntityType="Self.Semester" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Activity_Faculty" Association="Self.FK_Activity_Faculty">
+      <End Role="Faculty" EntitySet="Faculties" />
+      <End Role="Activity" EntitySet="Activities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Activity_Semester" Association="Self.FK_Activity_Semester">
+      <End Role="Semester" EntitySet="Semesters" />
+      <End Role="Activity" EntitySet="Activities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Activity_Student" Association="Self.FK_Activity_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Activity" EntitySet="Activities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Activity_User" Association="Self.FK_Activity_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Activity" EntitySet="Activities" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,144 @@
+﻿@using Activity.Models
+@model IEnumerable<Tracking.Models.ActivityItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm())
+{
+
+    <div class="form-horizontal">
+        <h2>Reports</h2>
+        <hr />
+
+        <!-- Display Error Message -->
+        <div style="color:red">@ViewBag.Message</div>
+
+        <table class="table">
+            <tr>
+                <td class="align-right">
+                    <div class="form-group">
+                        @Html.Label("N#", htmlAttributes: new { @class = "control-label col-md-0" })
+                        @Html.TextBox("Number", null, new { @value = ViewBag.Number })
+                    </div>
+                </td>
+                <td class="align-right">
+                    <div class="form-group">
+                        @Html.Label("Last Name", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.TextBox("LastName", null, new { @value = ViewBag.lastName })
+                    </div>
+                </td>
+                <td class="align-right">
+                    <div class="form-group">
+                        @Html.Label("First Name", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.TextBox("FirstName", null, new { @value = ViewBag.firstName })
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="align-right">
+                    <div class="form-group">
+                        @Html.Label("Term", htmlAttributes: new { @class = "control-label col-md-0" })
+                        @Html.TextBox("Term", null, new { @value = ViewBag.term })
+                    </div>
+                </td>
+                <td class="align-right">
+                    <div class="form-group">
+                        @Html.Label("Major", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.TextBox("Major", null, new { @value = ViewBag.major })
+                    </div>
+                </td>
+                <td class="align-right">
+                    <div class="form-group">
+                        @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-3" })
+                        @Html.TextBox("Date", null, new { @value = ViewBag.date })
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="form-group">
+                        <button type="submit" name="action" value="Search" class="submit-with-icon">
+                            <span class="glyphicon glyphicon-search"></span> Search
+                        </button>
+
+                        <button type="submit" name="action" value="Clear" class="submit-with-icon">
+                            <span class="glyphicon glyphicon-remove"></span> Clear
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+        </div>
+
+        <div class="form-group">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Student_N_Number)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Student.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Student.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Term)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Student.Major)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Hours)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.N_Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Term)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Student.Major)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Hours)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+            </tr>
+                }
+
+            </table>
+        </div>
+
+        }
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Tracking.Models.ActivityItem>
+
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>Activity List</strong>
+    </div>
+
+    @if (Model.Count() > 0)
+    {
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Hours)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Semester.Term)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Student.FirstName)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Semester.Term)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.FirstName)
+            </td>
+        </tr>
+    }
+</table>
+    }
+    else
+    {
+        @: <div class="text-muted">&nbsp;No activity found.</div>
+    }
+</div>
+
+
+

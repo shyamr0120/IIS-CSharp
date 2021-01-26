@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        <table style="width: 100%;">
+
+            <div class="header">
+
+                <tr>
+                    <td width="20%"><img src="~/Content/images/UNFLogo.jpg" alt="UNF Logo" width="200" height="100"></td>
+                    <td width="60%">
+                        <header>
+                            <h1 style="text-align:center; color:blue">Activity Tracker</h1>
+                        </header>
+                    </td>
+                    <td width="20%">Sign/Signup</td>
+                </tr>
+            </div>
+
+            <tr>
+                <!-- Left sidebar -->
+                <td width="30%">
+                    <nav>
+                        <h3>Navigation</h3>
+                        @Html.ActionLink("Home", "Index", "Home");
+                        </br>
+                        @Html.ActionLink("About", "About", "Home");
+                        </br>
+                        @Html.ActionLink("Contact", "Contact", "Home");
+                        </br>
+                    </nav>
+                </td>
+                <!-- Content Body -->
+                <td width="70%">
+                    <div class="content">
+                        @RenderBody()
+                    </div>
+                </td>
+                <!-- Right sidebar -->
+                <td width="0%"></td>
+            </tr>
+
+            <div class="footer">
+                <!-- Footer -->
+                <tr>
+                    <td>footer left</td>
+                    <td>footer middle</td>
+                    <td>footer right</td>
+                </tr>
+            </div>
+        </table>
+
+    </div>
+
+    <!-- style -->
+
+    <style>
+        header {
+            height: 100px;
+            width: 100%;
+            <!-- background-color: red; -->
+        }
+
+        nav {
+            float: left;
+            width: 200px;
+            height: 250px;
+            <!--background-color: darkgoldenrod;-->
+        }
+
+        .content {
+            background-color: aliceblue;
+            <!-- padding: 20px; -->
+        }
+
+        footer {
+            <!-- background-color: green; -->
+            width: 100%;
+            height: 50px;
+            float: right;
+            text-align: center;
+        }
+    </style>
+
+</body>
+</html>

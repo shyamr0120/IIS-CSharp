@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ActivityDBModelStoreContainer" CdmEntityContainer="ActivityDBEntities">
+    <EntitySetMapping Name="ActivityItems">
+      <EntityTypeMapping TypeName="ActivityDBModel.ActivityItem">
+        <MappingFragment StoreEntitySet="ActivityItem">
+          <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+          <ScalarProperty Name="Student_N_Number" ColumnName="Student_N_Number" />
+          <ScalarProperty Name="Term" ColumnName="Term" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Hours" ColumnName="Hours" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Semesters">
+      <EntityTypeMapping TypeName="ActivityDBModel.Semester">
+        <MappingFragment StoreEntitySet="Semester">
+          <ScalarProperty Name="Term" ColumnName="Term" />
+          <ScalarProperty Name="From" ColumnName="From" />
+          <ScalarProperty Name="To" ColumnName="To" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="ActivityDBModel.Student">
+        <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="N_Number" ColumnName="N_Number" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Major" ColumnName="Major" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

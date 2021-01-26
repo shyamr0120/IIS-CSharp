@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c4c14d5231d04f21bb22ccf333f5a83e" Name="Diagram1">
+        <EntityTypeShape EntityType="ActivityDBModel.Activity" Width="1.5" PointX="2.875" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActivityDBModel.Faculty" Width="1.5" PointX="5.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActivityDBModel.Semester" Width="1.5" PointX="8.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActivityDBModel.Student" Width="1.5" PointX="0.5" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ActivityDBModel.User" Width="1.5" PointX="5.625" PointY="3.875" IsExpanded="true" />
+        <AssociationConnector Association="ActivityDBModel.FK_Activity_Faculty" ManuallyRouted="false" />
+        <AssociationConnector Association="ActivityDBModel.FK_Activity_Semester" ManuallyRouted="false" />
+        <AssociationConnector Association="ActivityDBModel.FK_Activity_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="ActivityDBModel.FK_Activity_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

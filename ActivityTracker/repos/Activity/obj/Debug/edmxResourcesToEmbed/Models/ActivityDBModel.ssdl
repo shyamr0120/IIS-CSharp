@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ActivityDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ActivityItem">
+    <Key>
+      <PropertyRef Name="ActivityID" />
+    </Key>
+    <Property Name="ActivityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Student_N_Number" Type="nchar" MaxLength="9" Nullable="false" />
+    <Property Name="Term" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Date" Type="date" />
+    <Property Name="Hours" Type="decimal" Precision="2" Scale="2" />
+    <Property Name="Description" Type="nvarchar" MaxLength="250" />
+  </EntityType>
+  <EntityType Name="Semester">
+    <Key>
+      <PropertyRef Name="Term" />
+    </Key>
+    <Property Name="Term" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="From" Type="date" />
+    <Property Name="To" Type="date" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="N_Number" />
+    </Key>
+    <Property Name="N_Number" Type="nchar" MaxLength="9" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Major" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Activity_Semester">
+    <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
+    <End Role="ActivityItem" Type="Self.ActivityItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Semester">
+        <PropertyRef Name="Term" />
+      </Principal>
+      <Dependent Role="ActivityItem">
+        <PropertyRef Name="Term" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Activity_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="ActivityItem" Type="Self.ActivityItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="N_Number" />
+      </Principal>
+      <Dependent Role="ActivityItem">
+        <PropertyRef Name="Student_N_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ActivityDBModelStoreContainer">
+    <EntitySet Name="ActivityItem" EntityType="Self.ActivityItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Semester" EntityType="Self.Semester" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Activity_Semester" Association="Self.FK_Activity_Semester">
+      <End Role="Semester" EntitySet="Semester" />
+      <End Role="ActivityItem" EntitySet="ActivityItem" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Activity_Student" Association="Self.FK_Activity_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="ActivityItem" EntitySet="ActivityItem" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

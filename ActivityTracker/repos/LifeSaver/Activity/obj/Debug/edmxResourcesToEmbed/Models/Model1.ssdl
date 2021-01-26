@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ActivityDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Activity">
+    <Key>
+      <PropertyRef Name="ActivityID" />
+    </Key>
+    <Property Name="ActivityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Student_N_Number" Type="nchar" MaxLength="9" Nullable="false" />
+    <Property Name="Term" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Hours" Type="decimal" Precision="2" Scale="2" Nullable="false" />
+    <Property Name="Description" Type="nchar" MaxLength="250" Nullable="false" />
+    <Property Name="AuthorizedBy" Type="nchar" MaxLength="9" />
+    <Property Name="EnteredBy" Type="nchar" MaxLength="9" Nullable="false" />
+    <Property Name="Timestamp" Type="timestamp" StoreGeneratedPattern="Computed" />
+  </EntityType>
+  <EntityType Name="Faculty">
+    <Key>
+      <PropertyRef Name="N_Number" />
+    </Key>
+    <Property Name="N_Number" Type="nchar" MaxLength="9" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleInitial" Type="nchar" MaxLength="10" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Department" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EMail" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Semester">
+    <Key>
+      <PropertyRef Name="Term" />
+    </Key>
+    <Property Name="Term" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="From" Type="date" />
+    <Property Name="To" Type="date" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="N_Number" />
+    </Key>
+    <Property Name="N_Number" Type="nchar" MaxLength="9" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleInitail" Type="nchar" MaxLength="10" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Major" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EMail" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="N_Number" />
+    </Key>
+    <Property Name="N_Number" Type="nchar" MaxLength="9" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MiddleInitial" Type="nchar" MaxLength="10" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Department" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="EMail" Type="nvarchar" MaxLength="50" />
+    <Property Name="Phone" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_Activity_Faculty">
+    <End Role="Faculty" Type="Self.Faculty" Multiplicity="0..1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="N_Number" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="AuthorizedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Activity_Semester">
+    <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Semester">
+        <PropertyRef Name="Term" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="Term" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Activity_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="N_Number" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="Student_N_Number" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Activity_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Activity" Type="Self.Activity" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="N_Number" />
+      </Principal>
+      <Dependent Role="Activity">
+        <PropertyRef Name="EnteredBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ActivityDBModelStoreContainer">
+    <EntitySet Name="Activity" EntityType="Self.Activity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Faculty" EntityType="Self.Faculty" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Semester" EntityType="Self.Semester" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Activity_Faculty" Association="Self.FK_Activity_Faculty">
+      <End Role="Faculty" EntitySet="Faculty" />
+      <End Role="Activity" EntitySet="Activity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Activity_Semester" Association="Self.FK_Activity_Semester">
+      <End Role="Semester" EntitySet="Semester" />
+      <End Role="Activity" EntitySet="Activity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Activity_Student" Association="Self.FK_Activity_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Activity" EntitySet="Activity" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Activity_User" Association="Self.FK_Activity_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Activity" EntitySet="Activity" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ActivityDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActivityItem">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+          </Key>
+          <Property Name="ActivityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Student_N_Number" Type="nchar" MaxLength="9" Nullable="false" />
+          <Property Name="Term" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Hours" Type="decimal" Precision="4" Scale="2" />
+          <Property Name="Description" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Semester">
+          <Key>
+            <PropertyRef Name="Term" />
+          </Key>
+          <Property Name="Term" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="From" Type="date" />
+          <Property Name="To" Type="date" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="N_Number" />
+          </Key>
+          <Property Name="N_Number" Type="nchar" MaxLength="9" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Major" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Activity_Semester">
+          <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
+          <End Role="ActivityItem" Type="Self.ActivityItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="Term" />
+            </Principal>
+            <Dependent Role="ActivityItem">
+              <PropertyRef Name="Term" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activity_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="ActivityItem" Type="Self.ActivityItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="N_Number" />
+            </Principal>
+            <Dependent Role="ActivityItem">
+              <PropertyRef Name="Student_N_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ActivityDBModelStoreContainer">
+          <EntitySet Name="ActivityItem" EntityType="Self.ActivityItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Semester" EntityType="Self.Semester" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Activity_Semester" Association="Self.FK_Activity_Semester">
+            <End Role="Semester" EntitySet="Semester" />
+            <End Role="ActivityItem" EntitySet="ActivityItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activity_Student" Association="Self.FK_Activity_Student">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="ActivityItem" EntitySet="ActivityItem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ActivityDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ActivityItem">
+          <Key>
+            <PropertyRef Name="ActivityID" />
+          </Key>
+          <Property Name="ActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Student_N_Number" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Term" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Hours" Type="Decimal" Precision="4" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Semester" Relationship="Self.FK_Activity_Semester" FromRole="ActivityItem" ToRole="Semester" />
+          <NavigationProperty Name="Student" Relationship="Self.FK_Activity_Student" FromRole="ActivityItem" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Semester">
+          <Key>
+            <PropertyRef Name="Term" />
+          </Key>
+          <Property Name="Term" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="From" Type="DateTime" Precision="0" />
+          <Property Name="To" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ActivityItems" Relationship="Self.FK_Activity_Semester" FromRole="Semester" ToRole="ActivityItem" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="N_Number" />
+          </Key>
+          <Property Name="N_Number" Type="String" MaxLength="9" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Major" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ActivityItems" Relationship="Self.FK_Activity_Student" FromRole="Student" ToRole="ActivityItem" />
+        </EntityType>
+        <Association Name="FK_Activity_Semester">
+          <End Role="Semester" Type="Self.Semester" Multiplicity="1" />
+          <End Role="ActivityItem" Type="Self.ActivityItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="Term" />
+            </Principal>
+            <Dependent Role="ActivityItem">
+              <PropertyRef Name="Term" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Activity_Student">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="ActivityItem" Type="Self.ActivityItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="N_Number" />
+            </Principal>
+            <Dependent Role="ActivityItem">
+              <PropertyRef Name="Student_N_Number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ActivityDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActivityItems" EntityType="Self.ActivityItem" />
+          <EntitySet Name="Semesters" EntityType="Self.Semester" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <AssociationSet Name="FK_Activity_Semester" Association="Self.FK_Activity_Semester">
+            <End Role="Semester" EntitySet="Semesters" />
+            <End Role="ActivityItem" EntitySet="ActivityItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Activity_Student" Association="Self.FK_Activity_Student">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="ActivityItem" EntitySet="ActivityItems" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ActivityDBModelStoreContainer" CdmEntityContainer="ActivityDBEntities">
+          <EntitySetMapping Name="ActivityItems">
+            <EntityTypeMapping TypeName="ActivityDBModel.ActivityItem">
+              <MappingFragment StoreEntitySet="ActivityItem">
+                <ScalarProperty Name="ActivityID" ColumnName="ActivityID" />
+                <ScalarProperty Name="Student_N_Number" ColumnName="Student_N_Number" />
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Hours" ColumnName="Hours" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Semesters">
+            <EntityTypeMapping TypeName="ActivityDBModel.Semester">
+              <MappingFragment StoreEntitySet="Semester">
+                <ScalarProperty Name="Term" ColumnName="Term" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="To" ColumnName="To" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="ActivityDBModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="N_Number" ColumnName="N_Number" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Major" ColumnName="Major" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
